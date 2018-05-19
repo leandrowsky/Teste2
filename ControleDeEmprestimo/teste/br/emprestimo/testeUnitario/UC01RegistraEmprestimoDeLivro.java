@@ -8,6 +8,7 @@ import org.junit.Test;
 import br.emprestimo.modelo.Emprestimo;
 import br.emprestimo.modelo.Livro;
 import br.emprestimo.modelo.Usuario;
+import br.emprestimo.persistence.EmprestimoDAO;
 import br.emprestimo.servico.ServicoEmprestimo;
 
 import org.joda.time.DateTime;
@@ -91,5 +92,38 @@ public class UC01RegistraEmprestimoDeLivro {
 		assertTrue(dataAtual.equals(dataEmprestimo));
 	}
 	
+	@Test
+	public void CT09QuandoInserirUmEmprestimoRetornaTrue(){
+		//cenario
+		Emprestimo umEmprestimo = new Emprestimo();
+		Usuario umUsuario = ObtemUsuario.comDadosValidos();
+		Livro umLivro = ObtemLivro.comDadosValidos();
+		ServicoEmprestimo servico = new ServicoEmprestimo();
+		umEmprestimo = servico.empresta(umLivro, umUsuario);
+		EmprestimoDAO emprestimoDAO = new EmprestimoDAO();
+		
+		//ação
+		boolean resultadoEsperado = emprestimoDAO.adiciona(umEmprestimo);
+		//verificação
+		assertTrue(resultadoEsperado);
+	}
+	
+	
+	@Test
+	public void CT10QuandoInserirUmEmprestimoRetornaFalse(){
+		//cenario
+		Emprestimo umEmprestimo = new Emprestimo();
+		Usuario umUsuario = ObtemUsuario.comDadosValidos();
+		Livro umLivro = ObtemLivro.comDadosValidos();
+		ServicoEmprestimo servico = new ServicoEmprestimo();
+		umEmprestimo = servico.empresta(umLivro, umUsuario);
+		EmprestimoDAO emprestimoDAO = new EmprestimoDAO();
+		emprestimoDAO.adiciona(umEmprestimo);
+		
+		//ação
+		Emprestimo resultadoObtido = emprestimoDAO.consulta(umEmprestimo);
+		//verificação
+		assertTrue(resultadoObtido.equals(umEmprestimo));
+	}
 	
 }
