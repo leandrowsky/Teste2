@@ -120,6 +120,24 @@ public class UC01RegistraEmprestimoDeLivro {
 		EmprestimoDAO emprestimoDAO = new EmprestimoDAO();
 		emprestimoDAO.adiciona(umEmprestimo);
 		
+		//insere 2° registro
+		umUsuario = ObtemUsuario.listaComDadosValidos().get(0);
+		umEmprestimo = servico.empresta(umLivro, umUsuario);
+		emprestimoDAO = new EmprestimoDAO();
+		emprestimoDAO.adiciona(umEmprestimo);
+		
+		//insere 3° registro
+		umUsuario = ObtemUsuario.listaComDadosValidos().get(1);
+		umEmprestimo = servico.empresta(umLivro, umUsuario);
+		emprestimoDAO = new EmprestimoDAO();
+		emprestimoDAO.adiciona(umEmprestimo);
+		
+		//insere 4° registro
+		umUsuario = ObtemUsuario.listaComDadosValidos().get(2);
+		umEmprestimo = servico.empresta(umLivro, umUsuario);
+		emprestimoDAO = new EmprestimoDAO();
+		emprestimoDAO.adiciona(umEmprestimo);
+		
 		//ação
 		Emprestimo resultadoObtido = emprestimoDAO.consulta(umEmprestimo);
 		//verificação
